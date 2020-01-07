@@ -1,7 +1,14 @@
-FROM centos:7
+FROM node:13.5-alpine
 
-MAINTAINER josecsmorales@gmail.com
+WORKDIR /usr/src/app
 
-RUN yum install -y epel-release; yum install -y nginx
+RUN apk update
+RUN npm install express
 
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+ENV environment=production
+
+ADD app.js .
+
+EXPOSE 3000
+
+ENTRYPOINT [ "node", "app.js" ]
